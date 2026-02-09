@@ -1,0 +1,7 @@
+bin/
+.config/
+.rvenv/
+*.vault
+/tmp/rvenv_start
+.DS_Store
+.vscode/
