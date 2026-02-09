@@ -22,8 +22,8 @@ jobs:
 
     # 3. Simulate User Installation
     # We pipe "CI_User" and "CI_Handle" because install.sh asks for input
-    - name: Run Make Install
-      run: echo -e "CI_User\nCI_Handle" | make install
+    - name: Run Make Build
+      run: echo -e "CI_User\nCI_Handle" | make build
 
     # 4. Verify Binary Execution
     - name: Verify Binary
