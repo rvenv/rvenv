@@ -33,7 +33,12 @@ After the installer finishes, you can verify the binary is ready by checking the
 ```Bash
 ./bin/rvenv status
 ```
-### Entering the environment
+### 4. Setting upthe global command
+Right after the local build is done, its time to make the `rvenv` command global, run:
+```Bash
+bash install.sh
+```
+### 5. Entering the environment
 To enter your `rvenv` environment run:
 ```Bash
 rvenv enter
