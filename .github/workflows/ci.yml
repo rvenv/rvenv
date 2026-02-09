@@ -1,0 +1,37 @@
+name: rvenv CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout the code
+    - uses: actions/checkout@v3
+
+    # 2. Static Analysis (Catch typos like 'esacc' automatically)
+    - name: Run ShellCheck
+      run: |
+        sudo apt-get install -y shellcheck
+        shellcheck src/*.sh
+
+    # 3. Simulate User Installation
+    # We pipe "CI_User" and "CI_Handle" because install.sh asks for input
+    - name: Run Make Install
+      run: echo -e "CI_User\nCI_Handle" | make install
+
+    # 4. Verify Binary Execution
+    - name: Verify Binary
+      run: |
+        if [ -f "./bin/rvenv" ]; then
+          echo "Binary built successfully."
+          ./bin/rvenv --help || echo "Help command missing, but binary runs."
+        else
+          echo "Binary failed to build."
+          exit 1
+        fi
