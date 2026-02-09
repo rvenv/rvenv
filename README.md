@@ -26,7 +26,7 @@ cd rvenv
 The Makefile will compile the binary structure, set the necessary executable permissions, and guide you through your initial identity setup.
 
 ```Bash
-make install
+make build
 ```
 ### 3. Verify Installation
 After the installer finishes, you can verify the binary is ready by checking the local build:
