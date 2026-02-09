@@ -1,30 +1,31 @@
 #!/bin/bash
-# rvenv - Environment Engine (Full Version)
+# rvenv - Environment Engine
 
 CONFIG_FILE="$HOME/.config/rvenv/user.json"
 
 function enter() {
-    # 1. Extract Identity
-    local HANDLE=$(grep -oP '(?<="username": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "user")
+    # Fix SC2155: Declare, then assign
+    local HANDLE
+    HANDLE=$(grep -oP '(?<="username": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "user")
     
-    # 2. Locate the bin folder relative to this script to inject into PATH
-    # This allows you to just type 'rvenv' instead of './bin/rvenv'
-    local BIN_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../bin" && pwd )"
+    local BIN_PATH
+    BIN_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../bin" && pwd )"
     
-    # 3. Mark the Pulse (Start Time)
+    # Track time
     date +%s > /tmp/rvenv_start
     
     echo -e "\e[32m[+]\e[0m Entering environment..."
     echo -e "\e[32m[+]\e[0m PATH updated with rvenv binaries."
 
-    # 4. Launch the Subshell
-    # We pass the PATH and the Custom Prompt (PS1)
-    exec bash --rcfile <(echo "
-        source ~/.bashrc
-        export PATH=\"$BIN_PATH:\$PATH\"
-        export PS1='\[\e[32m\]🍃 \[\e[36m\]$HANDLE\[\e[0m\]@rvenv:\[\e[34m\]\w\[\e[0m\] \$ '
-        echo -e 'Environment active. Type \e[1mstaus\e[0m for info or \e[1mexit\e[0m to leave.'
-    ")
+    # Fix SC2028: Use printf for reliable escape sequences
+    # We construct the RC file content safely
+    local RC_CONTENT
+    RC_CONTENT="source ~/.bashrc\n"
+    RC_CONTENT+="export PATH=\"$BIN_PATH:\$PATH\"\n"
+    RC_CONTENT+="export PS1='\[\e[32m\]🍃 \[\e[36m\]$HANDLE\[\e[0m\]@rvenv:\[\e[34m\]\w\[\e[0m\] \$ '\n"
+    RC_CONTENT+="echo -e 'Environment active. Type \e[1mstatus\e[0m for info or \e[1mexit\e[0m to leave.'"
+
+    exec bash --rcfile <(printf "%b" "$RC_CONTENT")
 }
 
 function uptime() {
@@ -32,10 +33,15 @@ function uptime() {
         echo "rvenv: No active session detected."
         return
     fi
-    local START=$(cat /tmp/rvenv_start)
-    local NOW=$(date +%s)
-    local DIFF=$((NOW - START))
     
+    # Fix SC2155: Split declaration
+    local START
+    START=$(cat /tmp/rvenv_start)
+    
+    local NOW
+    NOW=$(date +%s)
+    
+    local DIFF=$((NOW - START))
     local MIN=$((DIFF / 60))
     local SEC=$((DIFF % 60))
     
@@ -43,8 +49,12 @@ function uptime() {
 }
 
 function status() {
-    local HANDLE=$(grep -oP '(?<="username": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
-    local NAME=$(grep -oP '(?<="name": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
+    # Fix SC2155
+    local HANDLE
+    HANDLE=$(grep -oP '(?<="username": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
+    
+    local NAME
+    NAME=$(grep -oP '(?<="name": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
     
     echo -e "\e[1m--- rvenv status report ---\e[0m"
     echo -e "Guardian:  $NAME (@$HANDLE)"
@@ -58,7 +68,6 @@ function status() {
     echo -e "\e[1m---------------------------\e[0m"
 }
 
-# Route the internal engine calls
 case "$1" in
     enter)  enter ;;
     uptime) uptime ;;

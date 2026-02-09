@@ -1,9 +1,9 @@
 #!/bin/bash
 # rvenv core router - Self-Locating Version
 
-# Get the directory where THIS script is actually located
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+# shellcheck disable=SC1091
 case "$1" in
     user)
         source "$ROOT_DIR/identity.sh" "${@:2}"
