@@ -1,23 +1,38 @@
 #!/bin/bash
-# rvenv - System Installation Script
+# rvenv Installer - Talkative Version
 
-# Define paths
-CONFIG_DIR="$HOME/.config/rvenv"
-CONFIG_FILE="$CONFIG_DIR/user.json"
+set -e
 
-# Initialize System
-mkdir -p "$CONFIG_DIR"
+echo -e "\033[1;32m🍃 rvenv Installer\033[0m"
+echo "-----------------------------------------------"
 
-echo -e "\e[32m[+]\e[0m rvenv initialization..."
+# 1. Trigger the Makefile
+echo "Building binaries from source..."
+make build
 
-# Onboarding (Required for engine identity)
-if [ ! -f "$CONFIG_FILE" ]; then
-    read -p "Enter System Name: " NAME
-    read -p "Enter System Handle (username): " UNAME
-    echo "{\"name\": \"$NAME\", \"username\": \"$UNAME\"}" > "$CONFIG_FILE"
+# 2. Handle Global Path
+echo ""
+echo "System Integration"
+read -p "   Enable global access (allows typing 'rvenv' anywhere)? [y/N]: " GLOBAL_ANS
+
+if [[ "$GLOBAL_ANS" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    make link-global
 else
-    echo -e "\e[32m[+]\e[0m Identity configuration detected."
+    echo "   (Skipping global link. Use './bin/rvenv' for local execution.)"
 fi
 
-# Finalizing
-echo -e "\e[32m[+]\e[0m System ready. Binary located in ./bin/rvenv"
+# 3. Identity Check
+echo ""
+echo "Identity Verification"
+CONFIG_DIR="$HOME/.config/rvenv"
+if [ ! -f "$CONFIG_DIR/user.json" ]; then
+    echo "   [!] No identity found. Initializing Guardian setup..."
+    ./bin/rvenv user
+else
+    NAME=$(grep -oP '(?<="name": ")[^"]*' "$CONFIG_DIR/user.json")
+    echo "   [+] Identity confirmed: Welcome back, $NAME."
+fi
+
+echo ""
+echo "-----------------------------------------------"
+echo -e "\033[1;32m Installation Complete!\033[0m"

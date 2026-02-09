@@ -33,6 +33,11 @@ After the installer finishes, you can verify the binary is ready by checking the
 ```Bash
 ./bin/rvenv status
 ```
+### Entering the environment
+To enter your `rvenv` environment run:
+```Bash
+rvenv enter
+```
 ## Contributing
 
 We maintain high standards for code quality. Before submitting a Pull Request:
