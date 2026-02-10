@@ -12,7 +12,7 @@ function enter() {
     BIN_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../bin" && pwd )"
     
     # ADD RECURSIVE CHECK HERE
-    if [ ! -z "$RVENV_SESSION" ]; then
+    if [ -n "$RVENV_SESSION" ]; then
         echo -e "\e[31m[!]\e[0m Shell Inception detected. Already in rvenv session."
         echo "    Use 'exit' to leave the current session first."
         return 1
