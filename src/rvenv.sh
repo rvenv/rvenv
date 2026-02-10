@@ -13,6 +13,11 @@ ROOT_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 # Now ShellCheck won't complain because we tell it where to look
 # shellcheck disable=SC1091
 
+if [[ "$1" == "--version" || "$1" == "-v" ]]; then
+    echo "rvenv version 1.0.0"
+    exit 0
+fi
+
 case "$1" in
     user)   source "$ROOT_DIR/identity.sh" "${@:2}" ;;
     enter)  source "$ROOT_DIR/engine.sh" "enter" ;;
