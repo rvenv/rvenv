@@ -19,13 +19,15 @@ jobs:
       run: |
         sudo apt-get install -y shellcheck
         shellcheck src/*.sh
+    - name: Build and Verify
+      run: make build verify
 
     # 3. Simulate User Installation
     # We pipe "CI_User" and "CI_Handle" because install.sh asks for input
     - name: Run Make Build
       run: echo -e "CI_User\nCI_Handle" | make build
-
-    # 4. Verify Binary Execution
+    
+      # 4. Verify Binary Execution
     - name: Verify Binary
       run: |
         if [ -f "./bin/rvenv" ]; then

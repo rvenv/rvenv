@@ -1,21 +1,55 @@
-.PHONY: build clean link-global
+# --- Configuration ---
+BINARY_NAME = rvenv
+BIN_DIR = bin
+SRC_DIR = src
+INSTALL_PATH = /usr/local/bin/$(BINARY_NAME)
 
+# --- Colors for Terminal Output ---
+BLUE   = \033[1;34m
+GREEN  = \033[1;32m
+CYAN   = \033[1;36m
+RED    = \033[1;31m
+RESET  = \033[0m
+
+.PHONY: all build install link-global clean verify
+
+# Default target: build and verify
+all: build verify
+
+## 1. Build: Prepares the local environment
 build:
-	@echo " \033[1;34m[BUILD]\033[0m Starting compilation of rvenv components..."
-	@mkdir -p bin
-	@cp src/rvenv.sh bin/rvenv && echo "   -> \033[32m✔\033[0m Routed src/rvenv.sh to bin/rvenv"
-	@cp src/engine.sh bin/engine.sh && echo "   -> \033[32m✔\033[0m Routed src/engine.sh to bin/engine.sh"
-	@cp src/identity.sh bin/identity.sh && echo "   -> \033[32m✔\033[0m Routed src/identity.sh to bin/identity.sh"
-	@cp src/vault.sh bin/vault.sh && echo "   -> \033[32m✔\033[0m Routed src/vault.sh to bin/vault.sh"
-	@chmod +x bin/* && echo "   -> \033[32m✔\033[0m Set executable permissions on all binaries"
-	@echo "✅ \033[1;32m[SUCCESS]\033[0m Build complete in ./bin/"
+	@echo " $(BLUE)[BUILD]$(RESET) Preparing rvenv components..."
+	@mkdir -p $(BIN_DIR)
+	@cp $(SRC_DIR)/rvenv.sh $(BIN_DIR)/$(BINARY_NAME)
+	@cp $(SRC_DIR)/engine.sh $(BIN_DIR)/engine.sh
+	@cp $(SRC_DIR)/identity.sh $(BIN_DIR)/identity.sh
+	@cp $(SRC_DIR)/vault.sh $(BIN_DIR)/vault.sh
+	@chmod +x $(BIN_DIR)/*
+	@echo "   -> $(GREEN)✔$(RESET) Binaries prepared in ./$(BIN_DIR)"
 
-link-global:
-	@echo " \033[1;36m[LINK]\033[0m Creating global symlink in /usr/local/bin..."
-	@sudo ln -sf $$(pwd)/bin/rvenv /usr/local/bin/rvenv
-	@echo "   -> \033[32m✔\033[0m /usr/local/bin/rvenv -> $$(pwd)/bin/rvenv"
+## 2. Verify: Catch CI bugs locally
+verify:
+	@echo " $(CYAN)[VERIFY]$(RESET) Validating build..."
+	@if [ -f "$(BIN_DIR)/$(BINARY_NAME)" ]; then \
+		echo "   -> $(GREEN)✔$(RESET) Binary exists"; \
+	else \
+		echo "   -> $(RED)✘$(RESET) Binary missing"; exit 1; \
+	fi
+	@./$(BIN_DIR)/$(BINARY_NAME) --version > /dev/null 2>&1 || (echo "   -> $(RED)✘$(RESET) --version check failed (check src/rvenv.sh logic)"; exit 1)
+	@echo " $(GREEN)[SUCCESS]$(RESET) Build is stable."
+
+## 3. Install: The end-user entry point
+install: build
+	@echo " $(BLUE)[INSTALL]$(RESET) Launching interactive installer..."
+	@bash install.sh
+
+## 4. Link-Global: For developers (quick symlinking)
+link-global: build
+	@echo " $(CYAN)[LINK]$(RESET) Linking $(BINARY_NAME) to $(INSTALL_PATH)..."
+	@sudo ln -sf $$(pwd)/$(BIN_DIR)/$(BINARY_NAME) $(INSTALL_PATH)
+	@echo "   -> $(GREEN)✔$(RESET) Global link active."
 
 clean:
-	@echo " \033[1;31m[CLEAN]\033[0m Removing build artifacts..."
-	@rm -rf bin
-	@echo "Done."
+	@echo " $(RED)[CLEAN]$(RESET) Removing $(BIN_DIR) directory..."
+	@rm -rf $(BIN_DIR)
+	@echo " Done."
