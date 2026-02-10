@@ -19,20 +19,25 @@ To install `rvenv` on your local machine, ensure you have `make` and `bash` inst
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/rvenv/rvenv.git](https://github.com/rvenv/rvenv.git)
+git clone https://github.com/rvenv/rvenv.git
 cd rvenv
 ```
 ### 2. Run the Build & Install
 The Makefile will compile the binary structure, set the necessary executable permissions, and guide you through your initial identity setup.
-
 ```Bash
-make build
+make install
+```
+### 3. Identity Setup
+During the installation, user will be prompted to set up their identity. If they skipped it or want to do it manually:
+```Bash
+rvenv user --name "Your Name" --username "yourhandle"
 ```
 ### 3. Verify Installation
 After the installer finishes, you can verify the binary is ready by checking the local build:
 ```Bash
 ./bin/rvenv status
 ```
+
 ### 4. Setting upthe global command
 Right after the local build is done, its time to make the `rvenv` command global, run:
 ```Bash
