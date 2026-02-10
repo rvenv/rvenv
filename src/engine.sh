@@ -11,6 +11,13 @@ function enter() {
     local BIN_PATH
     BIN_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../bin" && pwd )"
     
+    # ADD RECURSIVE CHECK HERE
+    if [ ! -z "$RVENV_SESSION" ]; then
+        echo -e "\e[31m[!]\e[0m Shell Inception detected. Already in rvenv session."
+        echo "    Use 'exit' to leave the current session first."
+        return 1
+    fi
+    
     # Track time
     date +%s > /tmp/rvenv_start
     
@@ -18,10 +25,10 @@ function enter() {
     echo -e "\e[32m[+]\e[0m PATH updated with rvenv binaries."
 
     # Fix SC2028: Use printf for reliable escape sequences
-    # We construct the RC file content safely
     local RC_CONTENT
     RC_CONTENT="source ~/.bashrc\n"
     RC_CONTENT+="export PATH=\"$BIN_PATH:\$PATH\"\n"
+    RC_CONTENT+="export RVENV_SESSION=1\n"  # SET SESSION MARKER
     RC_CONTENT+="export PS1='\[\e[32m\]🍃 \[\e[36m\]$HANDLE\[\e[0m\]@rvenv:\[\e[34m\]\w\[\e[0m\] \$ '\n"
     RC_CONTENT+="echo -e 'Environment active. Type \e[1mstatus\e[0m for info or \e[1mexit\e[0m to leave.'"
 

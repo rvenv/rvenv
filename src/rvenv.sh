@@ -21,6 +21,10 @@ case "$1" in
     init)   source "$ROOT_DIR/vault.sh" "init" ;;
     put)    source "$ROOT_DIR/vault.sh" "put" "$2" "$3" ;;
     list)   source "$ROOT_DIR/vault.sh" "list" ;;
+    # ADD --version AND -v handlers here
+    version|-v|--version)
+        echo "rvenv version 0.1.0"  # TODO: store version dynamically
+        ;;
 
     # Specific command 'help' OR anything else '*'
     # This MUST be the last block in the case statement
