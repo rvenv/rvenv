@@ -3,6 +3,12 @@
 
 CONFIG_FILE="$HOME/.config/rvenv/user.json"
 
+# Ensure config directory and file exist
+mkdir -p "$HOME/.config/rvenv"
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo '{"name": "", "username": ""}' > "$CONFIG_FILE"
+fi
+
 case "$1" in
     --name)
         # Update name in JSON (using sed for simple text replacement)
