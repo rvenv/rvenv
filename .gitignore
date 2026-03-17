@@ -3,7 +3,7 @@
 bin/
 
 # Crucial: prevents your local API keys/secrets from being leaked.
-.rvenv_vars
+.rvenv_vault 
 *.vault
 .env
 .env.*
