@@ -56,22 +56,37 @@ function uptime() {
 }
 
 function status() {
+    # Colors
+    local BOLD="\e[1m"
+    local BLUE="\e[34m"
+    local CYAN="\e[36m"
+    local GREEN="\e[32m"
+    local RED="\e[31m"
+    local RESET="\e[0m"
+
+    # Data Fetching
     local HANDLE
     HANDLE=$(grep -oP '(?<="username": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
-    
     local NAME
     NAME=$(grep -oP '(?<="name": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
-    
-    printf "\e[1m--- rvenv status report ---\e[0m\n"
-    printf "Guardian:  %s (@%s)\n" "$NAME" "$HANDLE"
+
+    # The Header
+    printf "${BLUE}${BOLD}┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑${RESET}\n"
+    printf "  ${CYAN}${BOLD}RVENV ENGINE${RESET} | ${BOLD}v1.0.0${RESET}\n"
+    printf "${BLUE}┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙${RESET}\n"
+
+    # The Body
+    printf " ${BOLD}Identity:${RESET}  %s (${CYAN}@%s${RESET})\n" "$NAME" "$HANDLE"
     
     if [ -n "$RVENV_SESSION" ]; then
-        printf "Session:   \e[32mActive\e[0m\n"
+        printf " ${BOLD}Status:${RESET}    ${GREEN}● ACTIVE${RESET}\n"
         uptime
     else
-        printf "Session:   \e[31mInactive\e[0m\n"
+        printf " ${BOLD}Status:${RESET}    ${RED}○ INACTIVE${RESET}\n"
     fi
-    printf "\e[1m---------------------------\e[0m\n"
+    
+    # The Footer
+    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
 }
 
 case "$1" in
