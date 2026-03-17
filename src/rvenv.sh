@@ -24,6 +24,7 @@ case "$1" in
 
     # setup and identity
     user)   source "$ROOT_DIR/identity.sh" "${@:2}" ;;
+    config) source "$ROOT_DIR/identity.sh" "config" "${@:2}" ;;
     status) source "$ROOT_DIR/engine.sh" "status" ;;
     uptime) source "$ROOT_DIR/engine.sh" "uptime" ;;
 
@@ -41,6 +42,7 @@ case "$1" in
         echo ""
         echo "commands:"
         echo "  user      Set or update your Guardian identity (name/handle)"
+        echo "  config    Configure rvenv settings (encryption method)"
         echo "  status    Show current identity and session state"
         echo "  init      Initialize a new vault in the current directory"
         echo "  put       Store a secret key-value pair in the local vault"
