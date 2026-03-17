@@ -67,10 +67,11 @@ function put_secret() {
         return 1
     fi
 
-    read -s -p "Enter vault password: " password
+    read -r -s -p "Enter vault password: " password
     echo
 
-    local ENCRYPTED=$(encrypt_data "$VAL" "$password")
+    local ENCRYPTED
+    ENCRYPTED=$(encrypt_data "$VAL" "$password")
 
     if [ ! -f "$VAULT_FILE" ]; then
         echo "{\"$KEY\": \"$ENCRYPTED\"}" > "$VAULT_FILE"

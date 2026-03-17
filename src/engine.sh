@@ -1,6 +1,7 @@
 #!/bin/bash
 # rvenv - Environment Engine
 
+# shellcheck disable=SC1091
 source "$(dirname "${BASH_SOURCE[0]}")/vault.sh"
 
 CONFIG_FILE="$HOME/.config/rvenv/user.json"
@@ -28,19 +29,18 @@ function enter() {
 
     # Load vault secrets if present
     if [ -f "$VAULT_FILE" ]; then
-        read -s -p "Enter vault password: " VAULT_PASSWORD
+        read -r -s -p "Enter vault password: " VAULT_PASSWORD
         echo
         printf "\e[32m[+]\e[0m Decrypting vault secrets...\n"
         # Parse JSON and decrypt each key-value pair
         while IFS=: read -r key enc_val; do
-            key=$(echo "$key" | sed 's/[" ]//g')
-            enc_val=$(echo "$enc_val" | sed 's/[" }]*$//')
+            key=${key//[\" ]/}
+            enc_val=${enc_val%%[" }"]*}
             if [ -n "$key" ] && [ -n "$enc_val" ]; then
-                decrypted=$(decrypt_data "$enc_val" "$VAULT_PASSWORD")
-                if [ $? -eq 0 ]; then
+                if decrypted=$(decrypt_data "$enc_val" "$VAULT_PASSWORD"); then
                     RC_CONTENT+="export $key=\"$decrypted\"\n"
                 else
-                    printf "\e[31m[!]\e[0m Failed to decrypt $key\n"
+                    printf '\e[31m[!]\e[0m Failed to decrypt %s\n' "$key"
                 fi
             fi
         done < <(sed 's/[{}"]//g' "$VAULT_FILE" | tr ',' '\n')
@@ -65,7 +65,7 @@ function uptime() {
     fi
     
     local START
-    START=$(cat /tmp/rvenv_start)
+    read -r START < /tmp/rvenv_start
     
     local NOW
     NOW=$(date +%s)
@@ -79,12 +79,12 @@ function uptime() {
 
 function status() {
     # Colors
-    local BOLD="\e[1m"
-    local BLUE="\e[34m"
-    local CYAN="\e[36m"
-    local GREEN="\e[32m"
-    local RED="\e[31m"
-    local RESET="\e[0m"
+    local BOLD='\e[1m'
+    local BLUE='\e[34m'
+    local CYAN='\e[36m'
+    local GREEN='\e[32m'
+    local RED='\e[31m'
+    local RESET='\e[0m'
 
     # Data Fetching
     local HANDLE
@@ -93,22 +93,22 @@ function status() {
     NAME=$(grep -oP '(?<="name": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "unknown")
 
     # The Header
-    printf "${BLUE}${BOLD}┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑${RESET}\n"
-    printf "  ${CYAN}${BOLD}RVENV ENGINE${RESET} | ${BOLD}v1.0.0${RESET}\n"
-    printf "${BLUE}┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙${RESET}\n"
+    echo -e "${BLUE}${BOLD}┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑${RESET}"
+    echo -e "  ${CYAN}${BOLD}RVENV ENGINE${RESET} | ${BOLD}v1.0.0${RESET}"
+    echo -e "${BLUE}┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙${RESET}"
 
     # The Body
     printf " ${BOLD}Identity:${RESET}  %s (${CYAN}@%s${RESET})\n" "$NAME" "$HANDLE"
     
     if [ -n "$RVENV_SESSION" ]; then
-        printf " ${BOLD}Status:${RESET}    ${GREEN}● ACTIVE${RESET}\n"
+        echo -e " ${BOLD}Status:${RESET}    ${GREEN}● ACTIVE${RESET}"
         uptime
     else
-        printf " ${BOLD}Status:${RESET}    ${RED}○ INACTIVE${RESET}\n"
+        echo -e " ${BOLD}Status:${RESET}    ${RED}○ INACTIVE${RESET}"
     fi
     
     # The Footer
-    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 }
 
 case "$1" in
