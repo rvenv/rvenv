@@ -1,6 +1,7 @@
 #!/bin/bash
 # rvenv - Environment Engine
 
+# shellcheck disable=SC1091
 source "$(dirname "${BASH_SOURCE[0]}")/vault.sh"
 
 CONFIG_FILE="$HOME/.config/rvenv/user.json"
@@ -28,19 +29,18 @@ function enter() {
 
     # Load vault secrets if present
     if [ -f "$VAULT_FILE" ]; then
-        read -s -p "Enter vault password: " VAULT_PASSWORD
+        read -r -s -p "Enter vault password: " VAULT_PASSWORD
         echo
         printf "\e[32m[+]\e[0m Decrypting vault secrets...\n"
         # Parse JSON and decrypt each key-value pair
         while IFS=: read -r key enc_val; do
-            key=$(echo "$key" | sed 's/[" ]//g')
-            enc_val=$(echo "$enc_val" | sed 's/[" }]*$//')
+            key=${key//[\" ]/}
+            enc_val=${enc_val%%[" }"]*}
             if [ -n "$key" ] && [ -n "$enc_val" ]; then
-                decrypted=$(decrypt_data "$enc_val" "$VAULT_PASSWORD")
-                if [ $? -eq 0 ]; then
+                if decrypted=$(decrypt_data "$enc_val" "$VAULT_PASSWORD"); then
                     RC_CONTENT+="export $key=\"$decrypted\"\n"
                 else
-                    printf "\e[31m[!]\e[0m Failed to decrypt $key\n"
+                    printf '\e[31m[!]\e[0m Failed to decrypt %s\n' "$key"
                 fi
             fi
         done < <(sed 's/[{}"]//g' "$VAULT_FILE" | tr ',' '\n')
