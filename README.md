@@ -2,22 +2,23 @@
 <h3 align="center">
 	<img src="https://raw.githubusercontent.com/rvenv/rvenv/main/assets/rvenv.png" width="100" alt="Logo"/><br/>
 	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
-	Catppuccin
+	rvenv
 	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
 </h3>
 
 <h6 align="center">
-  <a href="https://catppuccin.com/pronunciation.mp3">/ˌkætpʊˈtʃiːn/</a>
+  <a href="nothing">/ˌɑːrviːiːɛnˈviː/
+</a>
 </h6>
 
 <h6 align="center">
-  <a href="https://github.com/catppuccin/catppuccin#-palette">Palette</a>
+  <a href="https://github.com/rvenv/rvenv##-Commands Reference">Commands</a>
   ·
-  <a href="https://github.com/catppuccin/catppuccin#-ports-and-more">Ports</a>
+  <a href="https://github.com/rvenv/rvenv/tree/main/docs/INSTALLAION.md">Instalation</a>
   ·
-  <a href="https://github.com/catppuccin/catppuccin#-showcase">Showcase</a>
+  <a href="https://github.com/rvenv/rvenv">Showcase</a>
   ·
-  <a href="https://github.com/catppuccin/catppuccin/tree/main/docs">Docs</a>
+  <a href="https://github.com/rvenv/rvenv/tree/main/docs">Docs</a>
 </h6>
 
 <p align="center">
@@ -34,11 +35,11 @@
 &nbsp;
 
 <p align="center">
-`rvenv` is a lightweight shell-based framework designed to manage project-specific identities and secure environment variables without polluting your global configuration. It allows developers to "step into" a workspace where the `PATH`, `PS1`, and encrypted secrets are automatically scoped to that specific project.
+<i>rvenv</i> is a lightweight shell-based framework designed to manage project-specific identities and secure environment variables without polluting your global configuration. It allows developers to "step into" a workspace where the <b>`PATH`, `PS1`</b> and encrypted secrets are automatically scoped to that specific project.
 </p>
 
 <p align="center">
-  <a href="https://github.com/catppuccin">
+  <a href="https://github.com/rvenv">
     <picture>
       <source srcset="assets/social/macchiato_github.svg" width="64" height="64" alt="Github Logo" media="(prefers-color-scheme: dark)"/>
       <source srcset="assets/social/latte_github.svg" width="64" height="64" alt="Github Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
@@ -46,7 +47,7 @@
     </picture>
   </a>
   <img src="assets/misc/transparent.png" height="1" width="5"/>
-  <a href="https://www.npmjs.com/org/catppuccin">
+  <a href="https://www.npmjs.com/">
     <picture>
       <source srcset="assets/social/macchiato_npm.svg" width="64" height="64" alt="NPM Logo" media="(prefers-color-scheme: dark)"/>
       <source srcset="assets/social/latte_npm.svg" width="64" height="64" alt="NPM Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
@@ -54,7 +55,7 @@
     </picture>
   </a>
   <img src="assets/misc/transparent.png" height="1" width="5"/>
-  <a href="https://discord.com/servers/907385605422448742">
+  <a href="https://discord.com/">
     <picture>
       <source srcset="assets/social/macchiato_discord.svg" width="64" height="64" alt="Discord Logo" media="(prefers-color-scheme: dark)"/>
       <source srcset="assets/social/latte_discord.svg" width="64" height="64" alt="Discord Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
@@ -62,7 +63,7 @@
     </picture>
   </a>
   <img src="assets/misc/transparent.png" height="1" width="5"/>
-  <a href="https://twitter.com/catppuccintheme">
+  <a href="https://twitter.com/rvenvv">
     <picture>
       <source srcset="assets/social/macchiato_twitter.svg" width="64" height="64" alt="Twitter Logo" media="(prefers-color-scheme: dark)"/>
       <source srcset="assets/social/latte_twitter.svg" width="64" height="64" alt="Twitter Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
@@ -70,7 +71,7 @@
     </picture>
   </a>
   <img src="assets/misc/transparent.png" height="1" width="5"/>
-  <a href="https://fosstodon.org/@catppuccin">
+  <a href="https://fosstodon.org/">
     <picture>
       <source srcset="assets/social/macchiato_mastodon.svg" width="64" height="64" alt="Mastodon Logo" media="(prefers-color-scheme: dark)"/>
       <source srcset="assets/social/latte_mastodon.svg" width="64" height="64" alt="Mastodon Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
@@ -78,7 +79,7 @@
     </picture>
   </a>
   <img src="assets/misc/transparent.png" height="1" width="5"/>
-  <a href="https://reddit.com/r/catppuccin">
+  <a href="https://reddit.com/r/rvenv">
     <picture>
       <source srcset="assets/social/macchiato_reddit.svg" width="64" height="64" alt="Reddit Logo" media="(prefers-color-scheme: dark)"/>
       <source srcset="assets/social/latte_reddit.svg" width="64" height="64" alt="Reddit Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
