@@ -1,8 +1,98 @@
 ## 🍃 rvenv
+<h3 align="center">
+	<img src="https://raw.githubusercontent.com/rvenv/rvenv/main/assets/rvenv.png" width="100" alt="Logo"/><br/>
+	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
+	Catppuccin
+	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
+</h3>
 
-**The localized environment & identity vault.**
+<h6 align="center">
+  <a href="https://catppuccin.com/pronunciation.mp3">/ˌkætpʊˈtʃiːn/</a>
+</h6>
 
+<h6 align="center">
+  <a href="https://github.com/catppuccin/catppuccin#-palette">Palette</a>
+  ·
+  <a href="https://github.com/catppuccin/catppuccin#-ports-and-more">Ports</a>
+  ·
+  <a href="https://github.com/catppuccin/catppuccin#-showcase">Showcase</a>
+  ·
+  <a href="https://github.com/catppuccin/catppuccin/tree/main/docs">Docs</a>
+</h6>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/rvenv/rvenv/stargazers"><img src="https://img.shields.io/github/stars/rvenv/rvenv?colorA=363a4f&colorB=b7bdf8&style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KPHBhdGggZD0iTTIzNS4yNCw4NC4zOGwtMjguMDYsMjMuNjgsOC41NiwzNS4zOWExMy4zNCwxMy4zNCwwLDAsMS01LjA5LDEzLjkxLDEzLjU0LDEzLjU0LDAsMCwxLTE1LC42OUwxNjQsMTM5bC0zMS42NSwxOS4wNmExMy41MSwxMy41MSwwLDAsMS0xNS0uNjksMTMuMzIsMTMuMzIsMCwwLDEtNS4xLTEzLjkxbDguNTYtMzUuMzlMOTIuNzYsODQuMzhhMTMuMzksMTMuMzksMCwwLDEsNy42Ni0yMy41OGwzNi45NC0yLjkyLDE0LjIxLTMzLjY2YTEzLjUxLDEzLjUxLDAsMCwxLDI0Ljg2LDBsMTQuMjEsMzMuNjYsMzYuOTQsMi45MmExMy4zOSwxMy4zOSwwLDAsMSw3LjY2LDIzLjU4Wk04OC4xMSwxMTEuODlhOCw4LDAsMCwwLTExLjMyLDBMMTguMzQsMTcwLjM0YTgsOCwwLDAsMCwxMS4zMiwxMS4zMmw1OC40NS01OC40NUE4LDgsMCwwLDAsODguMTEsMTExLjg5Wm0tLjUsNjEuMTlMMzQuMzQsMjI2LjM0YTgsOCwwLDAsMCwxMS4zMiwxMS4zMmw1My4yNi01My4yN2E4LDgsMCwwLDAtMTEuMzEtMTEuMzFabTczLTEtNTQuMjksNTQuMjhhOCw4LDAsMCwwLDExLjMyLDExLjMybDU0LjI4LTU0LjI4YTgsOCwwLDAsMC0xMS4zMS0xMS4zMloiIHN0eWxlPSJmaWxsOiAjQ0FEM0Y1OyIvPgo8L3N2Zz4="></a>
+  <a href="https://github.com/rvenv/rvenv/releases/latest"><img src="https://img.shields.io/github/v/release/rvenv/rvenv?colorA=363a4f&colorB=a6da95&style=for-the-badge&logo=github&logoColor=cad3f5"></a>
+  <a href="https://github.com/rvenv/rvenv/issues"><img src="https://img.shields.io/github/issues/rvenv/rvenv?colorA=363a4f&colorB=f5a97f&style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KPHBhdGggZD0iTTIxNiwzMlYxOTJhOCw4LDAsMCwxLTgsOEg3MmExNiwxNiwwLDAsMC0xNiwxNkgxOTJhOCw4LDAsMCwxLDAsMTZINDhhOCw4LDAsMCwxLTgtOFY1NkEzMiwzMiwwLDAsMSw3MiwyNEgyMDhBOCw4LDAsMCwxLDIxNiwzMloiIHN0eWxlPSJmaWxsOiAjQ0FEM0Y1OyIvPgo8L3N2Zz4="></a>
+  <a href="https://discord.com/servers/907385605422448742"><img src="https://img.shields.io/discord/907385605422448742?style=for-the-badge&color=c6a0f6&labelColor=363a4f&logo=discord&logoColor=cad3f5"></a>
+</p>
+
+&nbsp;
+
+<p align="center">
 `rvenv` is a lightweight shell-based framework designed to manage project-specific identities and secure environment variables without polluting your global configuration. It allows developers to "step into" a workspace where the `PATH`, `PS1`, and encrypted secrets are automatically scoped to that specific project.
+</p>
+
+<p align="center">
+  <a href="https://github.com/catppuccin">
+    <picture>
+      <source srcset="assets/social/macchiato_github.svg" width="64" height="64" alt="Github Logo" media="(prefers-color-scheme: dark)"/>
+      <source srcset="assets/social/latte_github.svg" width="64" height="64" alt="Github Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
+      <img src="assets/social/_github.svg" width="64" height="64" alt="Github Logo"/>
+    </picture>
+  </a>
+  <img src="assets/misc/transparent.png" height="1" width="5"/>
+  <a href="https://www.npmjs.com/org/catppuccin">
+    <picture>
+      <source srcset="assets/social/macchiato_npm.svg" width="64" height="64" alt="NPM Logo" media="(prefers-color-scheme: dark)"/>
+      <source srcset="assets/social/latte_npm.svg" width="64" height="64" alt="NPM Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
+      <img src="assets/social/_npm.svg" width="64" height="64" alt="NPM Logo"/>
+    </picture>
+  </a>
+  <img src="assets/misc/transparent.png" height="1" width="5"/>
+  <a href="https://discord.com/servers/907385605422448742">
+    <picture>
+      <source srcset="assets/social/macchiato_discord.svg" width="64" height="64" alt="Discord Logo" media="(prefers-color-scheme: dark)"/>
+      <source srcset="assets/social/latte_discord.svg" width="64" height="64" alt="Discord Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
+      <img src="assets/social/_discord.svg" width="64" height="64" alt="Discord Logo"/>
+    </picture>
+  </a>
+  <img src="assets/misc/transparent.png" height="1" width="5"/>
+  <a href="https://twitter.com/catppuccintheme">
+    <picture>
+      <source srcset="assets/social/macchiato_twitter.svg" width="64" height="64" alt="Twitter Logo" media="(prefers-color-scheme: dark)"/>
+      <source srcset="assets/social/latte_twitter.svg" width="64" height="64" alt="Twitter Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
+      <img src="assets/social/_twitter.svg" width="64" height="64" alt="Twitter Logo"/>
+    </picture>
+  </a>
+  <img src="assets/misc/transparent.png" height="1" width="5"/>
+  <a href="https://fosstodon.org/@catppuccin">
+    <picture>
+      <source srcset="assets/social/macchiato_mastodon.svg" width="64" height="64" alt="Mastodon Logo" media="(prefers-color-scheme: dark)"/>
+      <source srcset="assets/social/latte_mastodon.svg" width="64" height="64" alt="Mastodon Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
+      <img src="assets/social/_mastodon.svg" width="64" height="64" alt="Mastodon Logo"/>
+    </picture>
+  </a>
+  <img src="assets/misc/transparent.png" height="1" width="5"/>
+  <a href="https://reddit.com/r/catppuccin">
+    <picture>
+      <source srcset="assets/social/macchiato_reddit.svg" width="64" height="64" alt="Reddit Logo" media="(prefers-color-scheme: dark)"/>
+      <source srcset="assets/social/latte_reddit.svg" width="64" height="64" alt="Reddit Logo" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"/>
+      <img src="assets/social/_reddit.svg" width="64" height="64" alt="Reddit Logo"/>
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+Join our community!
+</p>
+
+&nbsp;
+
 
 ### Key Features
 
@@ -12,118 +102,6 @@
 - **Configurable Encryption**: Choose between OpenSSL (default) or age for encryption
 - **Modular Architecture**: Clean separation of concerns with router, engine, and vault components
 
-### Architecture
-
-The project is structured for transparency, security, and ease of build:
-
-* **`src/`**: Contains the core logic including the Command Router, Identity Management, Environment Engine, and Vault operations.
-* **`bin/`**: The directory for compiled/linked binaries. This is ignored by version control to ensure platform-specific builds.
-* **`Makefile`**: The orchestration layer used to automate the build, installation, and permission handling.
-* **`.config/`**: Persistent storage for your global "Guardian" identity and preferences, kept separate from project source code.
-* **`.rvenv_vault`**: Project-specific encrypted vault file (per directory).
-
-## Installation
-
-To install `rvenv` on your local machine, ensure you have `make` and `bash` installed, then follow these steps:
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/rvenv/rvenv.git
-cd rvenv
-```
-
-### 2. Build the Project
-```bash
-make build
-```
-
-### 3. Install Globally (Optional)
-```bash
-make link-global
-# OR for manual installation:
-# sudo cp bin/rvenv /usr/local/bin/
-```
-
-### 4. Setup Your Identity
-```bash
-rvenv user --name "Your Name" --username "yourhandle"
-```
-
-### 5. Configure Encryption (Optional)
-```bash
-# Use modern age encryption (requires age to be installed)
-rvenv config --encryption age
-
-# Or stick with default OpenSSL
-rvenv config --encryption openssl
-```
-
-### 6. Verify Installation
-```bash
-rvenv --version
-rvenv status
-```
-
-## Usage
-
-### Identity Management
-```bash
-# Set your identity
-rvenv user --name "John Doe" --username "johndoe"
-
-# View current status
-rvenv status
-```
-
-### Vault Operations
-```bash
-# Initialize vault in current directory
-rvenv init
-
-# Store encrypted secrets
-rvenv put API_KEY "your-secret-key"
-rvenv put DB_PASSWORD "secure-password"
-
-# List stored keys
-rvenv list
-
-# Enter environment (decrypts and loads secrets)
-rvenv enter
-```
-
-### Configuration
-```bash
-# Choose encryption backend
-rvenv config --encryption openssl  # Default, no extra deps
-rvenv config --encryption age      # Modern, requires age
-```
-
-### Environment Session
-```bash
-# Start an rvenv session
-rvenv enter
-
-# Inside session: secrets are available as environment variables
-echo $API_KEY      # Decrypted value available
-echo $DB_PASSWORD  # Decrypted value available
-
-# Exit session
-exit
-```
-
-## Encryption Options
-
-### OpenSSL (Default)
-- **Pros**: Pre-installed on most systems, no dependencies
-- **Cons**: Older cryptography (AES-256-CBC)
-- **Use case**: Reliable default for all environments
-
-### Age
-- **Pros**: Modern cryptography (ChaCha20-Poly1305), simpler UX
-- **Cons**: Requires installation (`apt install age`, `brew install age`)
-- **Use case**: Enhanced security for advanced users
-
-**Note**: If age is selected but not installed, rvenv automatically falls back to OpenSSL.
 
 ## Commands Reference
 
@@ -139,29 +117,3 @@ exit
 | `rvenv enter` | Start environment session with decrypted secrets |
 | `rvenv uptime` | Show current session duration |
 | `rvenv --version` | Show version information |
-
-## Security
-
-- **Encryption at Rest**: All secrets are encrypted using industry-standard algorithms
-- **Password Protection**: Vault requires password for encryption/decryption
-- **Session-Scoped**: Secrets only available during active rvenv sessions
-- **No Plaintext Storage**: Secrets never stored in plaintext
-- **Isolated Config**: User config separate from project code
-
-## Contributing
-
-We maintain high standards for code quality. Before submitting a Pull Request:
-
-- Branching: Always work on a feature or fix branch (`git checkout -b feature/name`).
-- Linting: Ensure all scripts pass ShellCheck analysis. We aim for zero warnings to ensure POSIX compliance and execution stability.
-- Documentation: Update the README.md if adding user-facing features.
-- Testing: Test encryption functionality thoroughly across different systems.
-## Contributing
-
-We maintain high standards for code quality. Before submitting a Pull Request:
-
-- Branching: Always work on a feature or fix branch (git checkout -b feature/name).
-
-- Linting: Ensure all scripts pass ShellCheck analysis. We aim for zero warnings to ensure POSIX compliance and execution stability.
-
-- Documentation: Update the CONTRIBUTING.md if adding internal logic.
