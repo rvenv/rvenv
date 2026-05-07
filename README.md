@@ -107,7 +107,7 @@ Join our community!
 
 ## Quick Start
 
-### 1. Install
+### For Bash
 
 ```bash
 git clone https://github.com/rvenv/rvenv.git
@@ -115,25 +115,47 @@ cd rvenv
 make install
 ```
 
-### 2. Initialize a Project
+### For PowerShell
+
+```powershell
+git clone https://github.com/rvenv/rvenv.git
+cd rvenv
+./install.ps1
+```
+
+### Common Usage
+
+#### Initialize a Project
 
 ```bash
-cd my-project
+# Bash
 rvenv init
+
+# PowerShell
+Import-Module Rvenv
+Init-Project
 ```
 
-### 3. Store Secrets
+#### Store Secrets
 
 ```bash
+# Bash
 rvenv put API_KEY "your-secret-token"
+
+# PowerShell
+Put-Secret -Key "API_KEY" -Value "your-secret-token"
 ```
 
-### 4. Enter Environment
+#### Enter Environment
 
 ```bash
+# Bash
 rvenv enter
-# Your API_KEY is now available as an environment variable!
 echo $API_KEY
+
+# PowerShell
+Invoke-Rvenv
+# $API_KEY is now available
 ```
 
 ## Commands Reference

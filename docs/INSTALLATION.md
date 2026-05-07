@@ -1,54 +1,70 @@
 ## Installation
 
-To install `rvenv` on your local machine, ensure you have `make` and `bash` installed, then follow these steps:
+To install `rvenv` on your local machine, follow the instructions for your environment.
 
-### 1. Clone the Repository
+### For Bash/Unix Environments
 
-```bash
-git clone https://github.com/rvenv/rvenv.git
-cd rvenv
-```
+Ensure you have `make` and `bash` installed:
 
-### 2. Build the Project
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/rvenv/rvenv.git
+   cd rvenv
+   ```
+2. **Build the Project**
+   ```bash
+   make build
+   ```
+3. **Run the Interactive Installer**
+   ```bash
+   make install
+   ```
 
-```bash
-make build
-```
+### For PowerShell (Windows/Linux/macOS)
 
-### 3. Run the Interactive Installer
+Ensure you have [PowerShell Core](https://github.com/PowerShell/PowerShell) installed:
 
-```bash
-make install
-```
-
-This will guide you through:
-
-- Enabling global access (linking `rvenv` to `/usr/local/bin`)
-- Setting up your identity (Name and Username)
-- Initializing a Master Vault Password (stored locally at `~/.config/rvenv/.vault_pass`)
-
-### 4. Verify Installation
-
-```bash
-rvenv --version
-rvenv status
-```
-
-## Dependencies
-
-- **Bash**: Required for script execution.
-- **OpenSSL**: Default encryption backend (usually pre-installed).
-- **Age**: Optional backend for modern encryption (install via `apt install age`, `brew install age`, etc.).
-- **Make**: Required for the build process.
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/rvenv/rvenv.git
+   cd rvenv
+   ```
+2. **Install Globally**
+   Run the installation script in PowerShell:
+   ```powershell
+   ./install.ps1
+   ```
+3. **Verify Installation**
+   ```powershell
+   Import-Module Rvenv
+   Get-RvenvStatus
+   ```
 
 ## Usage
 
 ### Identity Management
 
+#### Bash
 ```bash
 # Set your identity
 rvenv user --name "John Doe" --username "johndoe"
-
 # View current status
 rvenv status
 ```
+
+#### PowerShell
+```powershell
+# Set your identity
+Update-Field -Key "name" -Value "John Doe" -Label "Name"
+Update-Field -Key "username" -Value "johndoe" -Label "Username"
+
+# View current status
+Get-RvenvStatus
+```
+
+## Dependencies
+
+- **Bash**: Required for Unix scripts.
+- **PowerShell**: Required for cross-platform modules.
+- **OpenSSL**: Required for encryption.
+- **Age**: Optional (install via your package manager).
