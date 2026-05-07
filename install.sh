@@ -33,8 +33,7 @@ if [[ "$PASS_ANS" =~ ^([yY][eE][sS]|[yY])$ ]]; then
   done
   echo "$NEW_PASS" > "$VAULT_PASS_FILE"
   chmod 600 "$VAULT_PASS_FILE"
-  echo "   -> [✔] Master password saved to $VAULT_PASS_FILE"
-fi
-
+  echo "   -> [OK] Master password saved to $VAULT_PASS_FILE"
+  fi
 echo ''
 echo "   Setup complete. Type 'rvenv help' to begin."

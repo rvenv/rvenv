@@ -26,30 +26,30 @@ build:
 	@cp $(SRC_DIR)/vault.sh $(BIN_DIR)/vault.sh
 	@cp $(SRC_DIR)/common.sh $(BIN_DIR)/common.sh
 	@chmod +x $(BIN_DIR)/*
-	@echo "   -> $(GREEN)✔$(RESET) Binaries prepared in ./$(BIN_DIR)"
+	@echo "   -> $(GREEN)[OK]$(RESET) Binaries prepared in ./$(BIN_DIR)"
 
 ## 2. Verify: Catch CI bugs locally
 verify:
 	@echo " $(CYAN)[VERIFY]$(RESET) Validating build..."
 	@if [ -f "$(BIN_DIR)/$(BINARY_NAME)" ]; then \
-		echo "   -> $(GREEN)✔$(RESET) Binary exists"; \
+		echo "   -> $(GREEN)[OK]$(RESET) Binary exists"; \
 	else \
-		echo "   -> $(RED)✘$(RESET) Binary missing"; exit 1; \
+		echo "   -> $(RED)[FAIL]$(RESET) Binary missing"; exit 1; \
 	fi
-	@./$(BIN_DIR)/$(BINARY_NAME) --version > /dev/null 2>&1 || (echo "   -> $(RED)✘$(RESET) --version check failed (check src/rvenv.sh logic)"; exit 1)
+	@./$(BIN_DIR)/$(BINARY_NAME) --version > /dev/null 2>&1 || (echo "   -> $(RED)[FAIL]$(RESET) --version check failed (check src/rvenv.sh logic)"; exit 1)
 	@echo " $(GREEN)[SUCCESS]$(RESET) Build is stable."
 
 ## 3. Lint: Static analysis for shell scripts
 lint:
 	@echo " $(CYAN)[LINT]$(RESET) Running ShellCheck..."
-	@shellcheck -e SC1091 src/*.sh *.sh || (echo "   -> $(RED)✘$(RESET) Linting failed"; exit 1)
-	@echo "   -> $(GREEN)✔$(RESET) Shell scripts are clean."
+	@shellcheck -e SC1091 src/*.sh *.sh || (echo "   -> $(RED)[FAIL]$(RESET) Linting failed"; exit 1)
+	@echo "   -> $(GREEN)[OK]$(RESET) Shell scripts are clean."
 
 ## 4. Format: Code style enforcement
 format:
 	@echo " $(CYAN)[FORMAT]$(RESET) Running Prettier..."
 	@npm run format
-	@echo "   -> $(GREEN)✔$(RESET) Code formatted."
+	@echo "   -> $(GREEN)[OK]$(RESET) Code formatted."
 
 ## 5. Install: The end-user entry point
 install: build
@@ -60,7 +60,7 @@ install: build
 link-global: build
 	@echo " $(CYAN)[LINK]$(RESET) Linking $(BINARY_NAME) to $(INSTALL_PATH)..."
 	@sudo ln -sf $$(pwd)/$(BIN_DIR)/$(BINARY_NAME) $(INSTALL_PATH)
-	@echo "   -> $(GREEN)✔$(RESET) Global link active."
+	@echo "   -> $(GREEN)[OK]$(RESET) Global link active."
 
 clean:
 	@echo " $(RED)[CLEAN]$(RESET) Removing $(BIN_DIR) directory..."

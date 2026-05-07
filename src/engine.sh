@@ -107,11 +107,11 @@ status() {
   printf " ${BOLD}Identity:${RESET}  %s (${CYAN}@%s${RESET})\n" "$name" "$handle"
 
   if [[ -n "$RVENV_SESSION" ]]; then
-    echo -e " ${BOLD}Status:${RESET}    ${GREEN}● ACTIVE${RESET}"
+    echo -e " ${BOLD}Status:${RESET}    ${GREEN}* ACTIVE${RESET}"
     echo -n " "
     uptime
   else
-    echo -e " ${BOLD}Status:${RESET}    ${RED}○ INACTIVE${RESET}"
+    echo -e " ${BOLD}Status:${RESET}    ${RED}. INACTIVE${RESET}"
   fi
   echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 }
