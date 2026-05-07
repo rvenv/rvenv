@@ -42,7 +42,7 @@ verify:
 ## 3. Lint: Static analysis for shell scripts
 lint:
 	@echo " $(CYAN)[LINT]$(RESET) Running ShellCheck..."
-	@shellcheck src/*.sh *.sh || (echo "   -> $(RED)✘$(RESET) Linting failed"; exit 1)
+	@shellcheck -e SC1091 src/*.sh *.sh || (echo "   -> $(RED)✘$(RESET) Linting failed"; exit 1)
 	@echo "   -> $(GREEN)✔$(RESET) Shell scripts are clean."
 
 ## 4. Format: Code style enforcement

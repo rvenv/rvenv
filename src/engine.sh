@@ -95,8 +95,9 @@ uptime() {
 
 # Display environment identity and status
 status() {
-  local handle=$(get_json_val 'username' "$CONFIG_FILE")
-  local name=$(get_json_val 'name' "$CONFIG_FILE")
+  local handle name
+  handle=$(get_json_val 'username' "$CONFIG_FILE")
+  name=$(get_json_val 'name' "$CONFIG_FILE")
   handle="${handle:-unknown}"
   name="${name:-unknown}"
 
