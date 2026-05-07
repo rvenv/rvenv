@@ -1,0 +1,39 @@
+name: Documentation Improvement
+description: Suggest improvements or report errors in the rvenv documentation.
+title: '[Docs]: '
+labels: ['documentation']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve our documentation!
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What needs to be improved?
+      description: Please describe the current state of the documentation and why it needs improvement.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: How can we improve it?
+      description: Provide details on what should be changed or added.
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Where is the issue located?
+      description: Provide a link to the page or a file path in the repository.
+      placeholder: docs/USAGE.md
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/rvenv/rvenv/blob/main/CODE_OF_CONDUCT.md).
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@google/gemini-cli": "^0.41.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3",
+    "prettier-plugin-sh": "^0.18.1"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "shellcheck src/*.sh *.sh"
+  }
+}

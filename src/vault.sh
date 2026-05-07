@@ -1,113 +1,133 @@
 #!/bin/bash
-# rvenv vault - Secret Management Logic
+# rvenv vault - Encryption and vault management
+
+# shellcheck disable=SC1090
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 
 VAULT_FILE=".rvenv_vault"
-CONFIG_FILE="$HOME/.config/rvenv/user.json"
 
-# Get encryption method from config
-get_encryption_method() {
-    grep -oP '(?<="encryption": ")[^"]*' "$CONFIG_FILE" 2>/dev/null || echo "openssl"
+# --- Utilities ---
+
+# Retrieve encryption method from configuration
+get_method() {
+  local method
+  method=$(get_json_val 'encryption' "$CONFIG_FILE")
+  echo "${method:-openssl}"
 }
 
-# Encryption helper functions
+# Encrypt data using the configured backend
+# Usage: encrypt_data <plain_text> <password>
 encrypt_data() {
-    local data="$1"
-    local password="$2"
-    local method
-    method=$(get_encryption_method)
-    
-    if [ "$method" = "age" ]; then
-        if command -v age >/dev/null 2>&1; then
-            AGE_PASSPHRASE="$password" echo "$data" | age -p -a 2>/dev/null
-        else
-            echo "age not installed, falling back to openssl" >&2
-            echo "$data" | openssl enc -aes-256-cbc -a -salt -k "$password" 2>/dev/null
-        fi
+  local data="$1"
+  local password="$2"
+  local method
+  method=$(get_method)
+
+  if [[ "$method" == 'age' ]]; then
+    if command -v age > /dev/null 2>&1; then
+      AGE_PASSPHRASE="$password" echo "$data" | age -p -a 2> /dev/null
     else
-        echo "$data" | openssl enc -aes-256-cbc -a -salt -k "$password" 2>/dev/null
+      echo -e "${ICON_WARN} age not installed; falling back to openssl" >&2
+      echo "$data" | openssl enc -aes-256-cbc -a -salt -k "$password" -pbkdf2 2> /dev/null
     fi
+  else
+    echo "$data" | openssl enc -aes-256-cbc -a -salt -k "$password" -pbkdf2 2> /dev/null
+  fi
 }
 
+# Decrypt data using the configured backend
+# Usage: decrypt_data <encrypted_text> <password>
 decrypt_data() {
-    local encrypted="$1"
-    local password="$2"
-    local method
-    method=$(get_encryption_method)
-    
-    if [ "$method" = "age" ]; then
-        if command -v age >/dev/null 2>&1; then
-            AGE_PASSPHRASE="$password" echo "$encrypted" | age -d -a 2>/dev/null
-        else
-            echo "age not installed, falling back to openssl" >&2
-            echo "$encrypted" | openssl enc -aes-256-cbc -a -d -salt -k "$password" 2>/dev/null
-        fi
+  local encrypted="$1"
+  local password="$2"
+  local method
+  method=$(get_method)
+
+  if [[ "$method" == 'age' ]]; then
+    if command -v age > /dev/null 2>&1; then
+      AGE_PASSPHRASE="$password" echo "$encrypted" | age -d -a 2> /dev/null
     else
-        echo "$encrypted" | openssl enc -aes-256-cbc -a -d -salt -k "$password" 2>/dev/null
+      echo -e "${ICON_WARN} age not installed; falling back to openssl" >&2
+      echo "$encrypted" | openssl enc -aes-256-cbc -a -d -salt -k "$password" -pbkdf2 2> /dev/null
     fi
+  else
+    echo "$encrypted" | openssl enc -aes-256-cbc -a -d -salt -k "$password" -pbkdf2 2> /dev/null
+  fi
 }
 
-# Initialize a new vault in the current directory
-function init_project() {
-    if [ -f "$VAULT_FILE" ]; then
-        echo -e "\e[33m[!]\e[0m Project already initialized in $(pwd)"
-    else
-        echo "{}" > "$VAULT_FILE"
-        echo -e "\e[32m[+]\e[0m Initialized rvenv in $(pwd)"
-        echo -e "\e[32m[+]\e[0m Created $VAULT_FILE (Vault)"
-    fi
+# --- Core Operations ---
+
+# Initialize a new encrypted vault
+init_project() {
+  if [[ -f "$VAULT_FILE" ]]; then
+    echo -e "${ICON_WARN} Vault already exists in $(pwd)"
+  else
+    echo '{}' > "$VAULT_FILE"
+    echo -e "${ICON_PLUS} Initialized vault in $(pwd)"
+  fi
 }
 
-# Store a key-value pair in the vault
-function put_secret() {
-    local KEY=$1
-    local VAL=$2
-    
-    if [[ -z "$KEY" || -z "$VAL" ]]; then
-        echo "Usage: rvenv put [KEY] [VALUE]"
-        return 1
-    fi
+# Store or update a secret in the vault
+put_secret() {
+  local key="$1"
+  local val="$2"
 
-    read -r -s -p "Enter vault password: " password
-    echo
+  if [[ -z "$key" || -z "$val" ]]; then
+    echo 'Usage: rvenv put <KEY> <VALUE>'
+    return 1
+  fi
 
-    local ENCRYPTED
-    ENCRYPTED=$(encrypt_data "$VAL" "$password")
+  # Validate key (must be a valid Bash identifier)
+  if [[ ! "$key" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]]; then
+    echo -e "${ICON_ERROR} Invalid key: '$key'"
+    echo -e '   Keys must follow Bash naming conventions (start with letter/underscore).'
+    return 1
+  fi
 
-    if [ ! -f "$VAULT_FILE" ]; then
-        echo "{\"$KEY\": \"$ENCRYPTED\"}" > "$VAULT_FILE"
-        echo -e "\e[32m[+]\e[0m Stored $KEY in vault."
-    else
-        # Check if empty object
-        if [ "$(cat "$VAULT_FILE")" = "{}" ]; then
-            echo "{\"$KEY\": \"$ENCRYPTED\"}" > "$VAULT_FILE"
-            echo -e "\e[32m[+]\e[0m Stored $KEY in vault."
-        elif grep -q "\"$KEY\":" "$VAULT_FILE"; then
-            # Replace existing
-            sed -i "s|\"$KEY\": \"[^\"]*\"|\"$KEY\": \"$ENCRYPTED\"|" "$VAULT_FILE"
-            echo -e "\e[34m[*]\e[0m Updated $KEY in vault."
-        else
-            # Add new key
-            sed -i "s|}$|, \"$KEY\": \"$ENCRYPTED\" }|" "$VAULT_FILE"
-            echo -e "\e[32m[+]\e[0m Stored $KEY in vault."
-        fi
-    fi
+  if [[ ! -f "$VAULT_FILE" ]]; then
+    echo -e "${ICON_ERROR} No vault found. Run 'rvenv init' first."
+    return 1
+  fi
+
+  local password
+  password=$(get_vault_password)
+
+  local encrypted
+  encrypted=$(encrypt_data "$val" "$password")
+
+  if [[ -z "$encrypted" ]]; then
+    echo -e "${ICON_ERROR} Encryption failed."
+    return 1
+  fi
+
+  if [[ "$(cat "$VAULT_FILE")" == '{}' ]]; then
+    echo "{\"$key\": \"$encrypted\"}" > "$VAULT_FILE"
+  elif grep -q "\"$key\":" "$VAULT_FILE"; then
+    sed -i "s|\"$key\": \"[^\"]*\"|\"$key\": \"$encrypted\"|" "$VAULT_FILE"
+  else
+    sed -i "s|}$|, \"$key\": \"$encrypted\" }|" "$VAULT_FILE"
+  fi
+  echo -e "${ICON_PLUS} secret stored: $key"
 }
 
-# List all keys currently in the vault (hiding values for safety)
-function list_secrets() {
-    if [ ! -f "$VAULT_FILE" ]; then
-        echo -e "\e[31m[!] No vault found. Run 'rvenv init' first.\e[0m"
-        return 1
-    fi
+# List secret keys (values remain hidden)
+list_secrets() {
+  if [[ ! -f "$VAULT_FILE" ]]; then
+    echo -e "${ICON_ERROR} No vault found. Run 'rvenv init' first."
+    return 1
+  fi
 
-    echo "--- Current Secrets ---"
-    # Extract keys from JSON
-    sed 's/[{}"]//g' "$VAULT_FILE" | tr ',' '\n' | awk -F: '{print "  - " $1}'
+  echo -e "${BLUE}${BOLD}--- Vault Keys ---${RESET}"
+  sed 's/[{}]//g' "$VAULT_FILE" | tr ',' '\n' | while IFS=: read -r key val; do
+    key=$(echo "$key" | tr -d ' "')
+    [[ -n "$key" ]] && echo "  - $key"
+  done
 }
 
-# Router for vault sub-commands
+# --- Entry Point ---
+
 case "$1" in
-    init) init_project ;;
-    put)  put_secret "$2" "$3" ;;
-    list) list_secrets ;;
+  init) init_project ;;
+  put) put_secret "$2" "$3" ;;
+  list) list_secrets ;;
 esac

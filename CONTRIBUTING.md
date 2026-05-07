@@ -1,4 +1,3 @@
-
 ## Contributing
 
 We maintain high standards for code quality. Before submitting a Pull Request:

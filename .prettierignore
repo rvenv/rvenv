@@ -1,0 +1,7 @@
+node_modules
+bin
+.rvenv_vault
+.vault_pass
+.config
+.git
+package-lock.json

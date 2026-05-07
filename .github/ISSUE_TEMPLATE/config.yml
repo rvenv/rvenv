@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question & Support
+    url: https://github.com/rvenv/rvenv/discussions
+    about: Ask for help or discuss rvenv.
+  - name: Security Reporting
+    url: https://github.com/rvenv/rvenv/security/policy
+    about: Please report security vulnerabilities here.

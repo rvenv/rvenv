@@ -3,7 +3,7 @@
 bin/
 
 # Crucial: prevents your local API keys/secrets from being leaked.
-.rvenv_vault 
+.rvenv_vault
 *.vault
 .env
 .env.*
@@ -28,3 +28,6 @@ user.json
 # Linting & Logs
 .shellcheckrc
 *.log
+
+# npm stuff
+node_modules

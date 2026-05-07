@@ -11,7 +11,7 @@ CYAN   = \033[1;36m
 RED    = \033[1;31m
 RESET  = \033[0m
 
-.PHONY: all build install link-global clean verify
+.PHONY: all build install link-global clean verify lint format
 
 # Default target: build and verify
 all: build verify
@@ -24,6 +24,7 @@ build:
 	@cp $(SRC_DIR)/engine.sh $(BIN_DIR)/engine.sh
 	@cp $(SRC_DIR)/identity.sh $(BIN_DIR)/identity.sh
 	@cp $(SRC_DIR)/vault.sh $(BIN_DIR)/vault.sh
+	@cp $(SRC_DIR)/common.sh $(BIN_DIR)/common.sh
 	@chmod +x $(BIN_DIR)/*
 	@echo "   -> $(GREEN)✔$(RESET) Binaries prepared in ./$(BIN_DIR)"
 
@@ -38,7 +39,19 @@ verify:
 	@./$(BIN_DIR)/$(BINARY_NAME) --version > /dev/null 2>&1 || (echo "   -> $(RED)✘$(RESET) --version check failed (check src/rvenv.sh logic)"; exit 1)
 	@echo " $(GREEN)[SUCCESS]$(RESET) Build is stable."
 
-## 3. Install: The end-user entry point
+## 3. Lint: Static analysis for shell scripts
+lint:
+	@echo " $(CYAN)[LINT]$(RESET) Running ShellCheck..."
+	@shellcheck src/*.sh *.sh || (echo "   -> $(RED)✘$(RESET) Linting failed"; exit 1)
+	@echo "   -> $(GREEN)✔$(RESET) Shell scripts are clean."
+
+## 4. Format: Code style enforcement
+format:
+	@echo " $(CYAN)[FORMAT]$(RESET) Running Prettier..."
+	@npm run format
+	@echo "   -> $(GREEN)✔$(RESET) Code formatted."
+
+## 5. Install: The end-user entry point
 install: build
 	@echo " $(BLUE)[INSTALL]$(RESET) Launching interactive installer..."
 	@bash install.sh

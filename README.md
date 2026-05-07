@@ -1,4 +1,5 @@
 ## 🍃 rvenv
+
 <h3 align="center">
 	<img src="https://raw.githubusercontent.com/rvenv/rvenv/main/assets/rvenv.png" width="100" alt="Logo"/><br/>
 	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
@@ -94,27 +95,58 @@ Join our community!
 
 &nbsp;
 
-
 ### Key Features
 
-- **Encrypted Vault**: Store sensitive environment variables securely with AES-256 or ChaCha20 encryption
-- **Identity Management**: Project-specific user identities and configurations
-- **Environment Isolation**: Scoped shell environment per project
-- **Configurable Encryption**: Choose between OpenSSL (default) or age for encryption
-- **Modular Architecture**: Clean separation of concerns with router, engine, and vault components
+- **Encrypted Vault**: Store sensitive environment variables securely with AES-256 or ChaCha20 encryption.
+- **Master Password Storage**: Optionally store your vault password locally (`~/.config/rvenv/.vault_pass`) for seamless session entry.
+- **Interactive Setup**: Simple installation process to configure your identity and security preferences.
+- **Identity Management**: Project-specific user identities (Name/Handle) scoped to your workspace.
+- **Environment Isolation**: Automatic `PATH` and `PS1` scoping when entering a project.
+- **Identifier Validation**: Ensures all secret keys are valid Bash identifiers to prevent shell errors.
+- **Modular Architecture**: Clean separation of concerns with router, engine, and vault components.
 
+## Quick Start
+
+### 1. Install
+
+```bash
+git clone https://github.com/rvenv/rvenv.git
+cd rvenv
+make install
+```
+
+### 2. Initialize a Project
+
+```bash
+cd my-project
+rvenv init
+```
+
+### 3. Store Secrets
+
+```bash
+rvenv put API_KEY "your-secret-token"
+```
+
+### 4. Enter Environment
+
+```bash
+rvenv enter
+# Your API_KEY is now available as an environment variable!
+echo $API_KEY
+```
 
 ## Commands Reference
 
-| Command | Description |
-|---------|-------------|
-| `rvenv user --name NAME` | Set your display name |
-| `rvenv user --username HANDLE` | Set your username/handle |
-| `rvenv config --encryption METHOD` | Choose encryption backend |
-| `rvenv status` | Show current identity and session info |
-| `rvenv init` | Initialize vault in current directory |
-| `rvenv put KEY VALUE` | Store encrypted secret |
-| `rvenv list` | List vault keys |
-| `rvenv enter` | Start environment session with decrypted secrets |
-| `rvenv uptime` | Show current session duration |
-| `rvenv --version` | Show version information |
+| Command                            | Description                                      |
+| ---------------------------------- | ------------------------------------------------ |
+| `rvenv user --name NAME`           | Set your display name                            |
+| `rvenv user --username HANDLE`     | Set your username/handle                         |
+| `rvenv config --encryption METHOD` | Choose encryption backend                        |
+| `rvenv status`                     | Show current identity and session info           |
+| `rvenv init`                       | Initialize vault in current directory            |
+| `rvenv put KEY VALUE`              | Store encrypted secret                           |
+| `rvenv list`                       | List vault keys                                  |
+| `rvenv enter`                      | Start environment session with decrypted secrets |
+| `rvenv uptime`                     | Show current session duration                    |
+| `rvenv --version`                  | Show version information                         |
