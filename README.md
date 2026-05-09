@@ -128,22 +128,13 @@ cd rvenv
 #### Initialize a Project
 
 ```bash
-# Bash
 rvenv init
-
-# PowerShell
-Import-Module Rvenv
-Init-Project
 ```
 
 #### Store Secrets
 
 ```bash
-# Bash
 rvenv put API_KEY "your-secret-token"
-
-# PowerShell
-Put-Secret -Key "API_KEY" -Value "your-secret-token"
 ```
 
 #### Enter Environment
@@ -151,11 +142,6 @@ Put-Secret -Key "API_KEY" -Value "your-secret-token"
 ```bash
 # Bash
 rvenv enter
-echo $API_KEY
-
-# PowerShell
-Invoke-Rvenv
-# $API_KEY is now available
 ```
 
 ## Commands Reference
