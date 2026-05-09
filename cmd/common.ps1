@@ -11,6 +11,13 @@ $global:ICON_INFO = "[*]"
 $global:ICON_WARN = "[!]"
 $global:ICON_ERROR = "[!]"
 
+# ANSI Colors/Formatting
+$global:CYAN = "`e[36m"
+$global:GREEN = "`e[32m"
+$global:RED = "`e[31m"
+$global:BOLD = "`e[1m"
+$global:RESET = "`e[0m"
+
 function Init-Config {
     if (-not (Test-Path $global:CONFIG_DIR)) {
         New-Item -ItemType Directory -Path $global:CONFIG_DIR -Force | Out-Null

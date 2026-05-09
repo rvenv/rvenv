@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # rvenv - PowerShell router for localized environments and identity vaults
 
-$VERSION = '1.0.0'
+$VERSION = '1.1.3'
 $ROOT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 # Import core components
@@ -57,11 +57,12 @@ switch ($cmd) {
     }
     
     "status" { Get-RvenvStatus }
+    "exit"   { Invoke-Exit }
     "uptime" { Write-Host "Session started at: $env:RVENV_START_TIME" }
     "init"   { Init-Project }
     "put"    { Put-Secret -Key $params[0] -Value $params[1] }
     "list"   { List-Secrets }
     "enter"  { Invoke-Rvenv }
     
-    Default { Show-Help }
+    Default { Get-RvenvStatus }
 }

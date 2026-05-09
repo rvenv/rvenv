@@ -1,7 +1,7 @@
 #!/bin/bash
 # rvenv - Core router for localized environments and identity vaults
 
-VERSION='1.0.0'
+VERSION='1.1.3'
 
 # Resolve the absolute path of the script, following symlinks
 SOURCE="${BASH_SOURCE[0]}"
