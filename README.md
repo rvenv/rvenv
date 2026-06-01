@@ -158,3 +158,8 @@ rvenv enter
 | `rvenv enter`                      | Start environment session with decrypted secrets |
 | `rvenv uptime`                     | Show current session duration                    |
 | `rvenv --version`                  | Show version information                         |
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rvenv/rvenv&type=Timeline)](https://star-history.com/#Ashutosh00710/github-readme-activity-graph&Timeline)
+
